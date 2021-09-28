@@ -1,11 +1,12 @@
 import java.util.*;
 import java.io.*;
+import homework.CoolStringArray;
 import java.nio.charset.StandardCharsets;
 
 public class WordStatInput {
 	public static void main(String[] args) {
 		String inputName = "input.txt", outputName = "output.txt";
-		LinkedHashMap<String, Integer> map = new LinkedHashMap<String, Integer>();
+		CoolStringArray input = new CoolStringArray();
 
 		try {
 			inputName = args[0];
@@ -29,12 +30,7 @@ public class WordStatInput {
 						if (!canBeInWord(c)) {
 							if (i - leftPtr >= 1) {
 								String word = line.substring(leftPtr, i);
-
-								int cnt = 1;
-								if (map.containsKey(word)) {
-									cnt += map.get(word);
-								}
-								map.put(word, cnt);
+								input.add(word);
 							}
 							leftPtr = i+1;
 						}
@@ -55,12 +51,36 @@ public class WordStatInput {
 			BufferedWriter out = new BufferedWriter(new FileWriter(outputName, StandardCharsets.UTF_8));
 
 			try {
-				for (Map.Entry<String, Integer> mapElement : map.entrySet()) {
-					String word = mapElement.getKey();
-					Integer cnt = mapElement.getValue();
-					out.write(word + " " + cnt);
-					out.newLine();
+				Integer[] indexes = new Integer[input.length()];
+				int[] cnt = new int[input.length()];
+
+				for (int i = 0; i < indexes.length; i++) {
+					indexes[i] = i;
 				}
+				Arrays.sort(indexes, new Comparator<Integer>() {
+				    public int compare(Integer o1, Integer o2) {
+				        return input.get(o2).compareTo(input.get(o1));
+				    }
+				});
+
+				for(int i = 0; i < indexes.length; i++) {
+					int j = i;
+					int minInd = indexes[i];
+					while(j < indexes.length && input.get(indexes[i]).equals(input.get(indexes[j]))) {
+						minInd = Math.min(minInd, indexes[j]);
+						j++;
+					}
+					cnt[minInd] = j-i;
+					i = j-1;
+				}
+
+				for(int i = 0; i < input.length(); i++) {
+					if(cnt[i] > 0) {
+						out.write(input.get(i) + " " + cnt[i]);
+					    out.newLine();
+					}
+				}
+
 			} finally {
 				out.close();
 			}
