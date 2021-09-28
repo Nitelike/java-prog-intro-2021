@@ -51,32 +51,17 @@ public class WordStatInput {
             BufferedWriter out = new BufferedWriter(new FileWriter(outputName, StandardCharsets.UTF_8));
 
             try {
-                Integer[] indexes = new Integer[input.length()];
-                int[] cnt = new int[input.length()];
+                input.sort();
 
-                for (int i = 0; i < indexes.length; i++) {
-                    indexes[i] = i;
-                }
-                Arrays.sort(indexes, (a, b) -> input.get(a).compareTo(input.get(b)));
-
-                for(int i = 0; i < indexes.length; i++) {
+                for (int i = 0; i < input.length(); i++) {
                     int j = i;
-                    int minInd = indexes[i];
-                    while(j < indexes.length && input.get(indexes[i]).equals(input.get(indexes[j]))) {
-                        minInd = Math.min(minInd, indexes[j]);
+                    while (j < input.length() && input.get(i).equals(input.get(j))) {
                         j++;
                     }
-                    cnt[minInd] = j-i;
+                    out.write(input.get(i) + " " + (j-i));
+                    out.newLine();
                     i = j-1;
                 }
-
-                for(int i = 0; i < input.length(); i++) {
-                    if(cnt[i] > 0) {
-                        out.write(input.get(i) + " " + cnt[i]);
-                        out.newLine();
-                    }
-                }
-
             } finally {
                 out.close();
             }

@@ -29,4 +29,8 @@ public class CoolStringArray {
     public int length() {
         return length;
     }
+
+    public void sort() {
+    	Arrays.sort(arr, 0, length);
+    }
 }
