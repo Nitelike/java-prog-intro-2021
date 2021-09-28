@@ -1,12 +1,11 @@
 import java.util.*;
 import java.io.*;
-import homework.CoolStringArray;
 import java.nio.charset.StandardCharsets;
 
-public class WordStatInput {
+public class WordStatWords {
     public static void main(String[] args) {
         String inputName = "input.txt", outputName = "output.txt";
-        CoolStringArray input = new CoolStringArray();
+        ArrayList<String> input = new ArrayList<String>();
 
         try {
             inputName = args[0];
@@ -51,11 +50,11 @@ public class WordStatInput {
             BufferedWriter out = new BufferedWriter(new FileWriter(outputName, StandardCharsets.UTF_8));
 
             try {
-                input.sort();
+                Collections.sort(input);
 
-                for (int i = 0; i < input.length(); i++) {
+                for (int i = 0; i < input.size(); i++) {
                     int j = i;
-                    while (j < input.length() && input.get(i).equals(input.get(j))) {
+                    while (j < input.size() && input.get(i).equals(input.get(j))) {
                         j++;
                     }
                     out.write(input.get(i) + " " + (j-i));
