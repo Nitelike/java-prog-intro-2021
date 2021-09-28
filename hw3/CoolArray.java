@@ -3,17 +3,12 @@ package homework;
 import java.util.Arrays;
 
 public class CoolArray {
-    private int[] arr;
+    private int[] arr = new int[0];
     private int length;
 
-    public CoolArray() {
-        arr = new int[0];
-        length = 0;
-    }
-
     public void add(int val) {
-        if (length >= arr.length) {
-            arr = Arrays.copyOf(arr, (arr.length*3/2) + 1);    
+        if (length == arr.length) {
+            arr = Arrays.copyOf(arr, (arr.length * 3 / 2) + 1);    
         }
         arr[length++] = val;
     }
