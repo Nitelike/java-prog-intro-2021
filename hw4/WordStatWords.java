@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.nio.charset.StandardCharsets;
+import homework.CoolArray;
 
 public class WordStatWords {
     public static void main(String[] args) {
@@ -22,27 +23,32 @@ public class WordStatWords {
 
         try {
             BufferedReader in = new BufferedReader(new FileReader(inputName, StandardCharsets.UTF_8));
+            CoolArray str = new CoolArray();
 
             try {
-                String line = in.readLine();
+                int x = in.read();
 
-                while (line != null) {
-                    line = line.toLowerCase() + " ";
-                    int leftPtr = 0;
+                while (true) {
+                    char c = (char)x;
 
-                    for (int i = 0; i < line.length(); i++) {
-                        char c = line.charAt(i);
-                        if (!canBeInWord(c)) {
-                            if (i - leftPtr >= 1) {
-                                String word = line.substring(leftPtr, i);
-                                input.add(word);
-                            }
-                            leftPtr = i+1;
+                    if (canBeInWord(c)) {
+                        c = Character.toLowerCase(c);
+                        str.add(c);
+                    } else {
+                        String word = str.toString();
+                        if (word.length() > 0) {
+                            input.add(word);
                         }
+                        str = new CoolArray();
                     }
 
-                    line = in.readLine();
+                    if (x == -1) {
+                        break;
+                    }
+
+                    x = in.read();
                 }
+
             } finally {
                 in.close();
             }
