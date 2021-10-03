@@ -1,107 +1,72 @@
 package homework;
 
-import java.io.Reader;
+import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.FileReader;
+import java.io.StringReader;
+import java.io.File;
+import java.io.InputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import homework.CoolArray;
+import java.util.function.Predicate;
 
 public class MyScanner {
-	private Reader in;
-	private final int BUFFER_SIZE = 1024;
-	private char[] buffered = new char[0];
-	private int ptr = 0;
-	private boolean endOfInput = false;
-	private boolean hasNextChar = true;
+    private BufferedReader in;
 
-	public MyScanner() {
-		in = new InputStreamReader(System.in);
-	}
+    public MyScanner(InputStream source) {
+        in = new BufferedReader( new InputStreamReader(source));
+    }
 
-	public MyScanner(String filename) throws FileNotFoundException, IOException {
-		in = new FileReader(filename, StandardCharsets.UTF_8);
-	}
+    public MyScanner(File source) throws FileNotFoundException, IOException {
+        in = new BufferedReader(new FileReader(source, StandardCharsets.UTF_8));
+    }
 
-	private void read() throws IOException {
-		char[] buffer = new char[BUFFER_SIZE];
-		int read = in.read(buffer);
+    public MyScanner(String source) {
+        in = new BufferedReader(new StringReader(source));
+    }
 
-		buffered = new char[Math.max(read, 0)];
-		ptr = 0;
+    public int nextChar() throws IOException {
+        return in.read();
+    }
 
-		if (read < BUFFER_SIZE) {
-			endOfInput = true;
-		}
+    public String nextLine() throws IOException {
+        return in.readLine();
+    }
 
-		for (int i = 0; i < buffered.length; i++) {
-			buffered[i] = buffer[i];
-		}
-	}
+    public String next() throws IOException {
+        return next(notWhitespace());
+    }
 
-	private void updateBuffered() throws IOException {
-		if (!endOfInput && ptr >= buffered.length) {
-			read();
-		}
-	}
+    public String next(Predicate<Character> notDelimiter) throws IOException {
+        String res = null;
+        CoolArray buf = new CoolArray();
+        boolean wasNotDelimiter = false;
+        int c = nextChar();
 
-	private boolean hasNextChar() throws IOException {
-		updateBuffered();
-		if (ptr >= buffered.length) {
-			hasNextChar = false;
-		}
-		return hasNextChar;
-	}
+        while (c != -1) {
+            if (notDelimiter.test((char)c)) {
+                wasNotDelimiter = true;
+                buf.add((char)c);
+            } else if (wasNotDelimiter) {
+                break;
+            }
+            c = nextChar();
+        }
 
-	private char nextChar() throws IOException {
-		updateBuffered();
-		if (ptr >= buffered.length) {
-			throw new IOException("Stream doesn't have next char");
-		} else {
-			return buffered[ptr++];
-		}
-	}
+        if (buf.length() > 0) {
+            res = buf.toString();
+        }
 
-	public boolean hasNext() throws IOException {
-		while (true) {
-			for (int i = ptr; i < buffered.length; i++) {
-				if (!Character.isWhitespace(buffered[i])) {
-					return true;
-				}
-			}
+        return res;
+    }
 
-			if (!endOfInput) {
-				updateBuffered();
-			} else {
-				return false;
-			}
-		}
-	}
+    public void close() throws IOException {
+        in.close();
+    }
 
-	public String next() throws IOException {
-		boolean wasNotWhitespace = false;
-		CoolArray buf = new CoolArray();
-
-		while (hasNextChar()) {
-			char c = nextChar();
-			if (Character.isWhitespace(c) && wasNotWhitespace) {
-				break;
-			} else {
-				wasNotWhitespace = true;
-				buf.add(c);
-			}
-		}
-
-		if (buf.length() == 0) {
-			throw new IOException("Stream doesn't have next word");
-		} else {
-			return buf.toString();
-		}
-		
-	}
-	
-	public void close() throws IOException {
-		in.close();
-	}	
+    private Predicate<Character> notWhitespace() {
+        return c -> !Character.isWhitespace(c);
+    }
 }
