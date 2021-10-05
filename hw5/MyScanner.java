@@ -16,7 +16,7 @@ public class MyScanner {
     private BufferedReader in;
 
     public MyScanner(InputStream source) {
-        in = new BufferedReader( new InputStreamReader(source));
+        in = new BufferedReader( new InputStreamReader(source)zzz);
     }
 
     public MyScanner(File source) throws FileNotFoundException, IOException {

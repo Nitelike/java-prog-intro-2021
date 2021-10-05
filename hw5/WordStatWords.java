@@ -41,8 +41,7 @@ public class WordStatWords {
                     while (j < input.size() && input.get(i).equals(input.get(j))) {
                         j++;
                     }
-                    out.write(input.get(i) + " " + (j-i));
-                    out.newLine();
+                    out.write(input.get(i) + " " + (j-i) + "\n");
                     i = j-1;
                 }
             } finally {
