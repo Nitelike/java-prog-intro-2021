@@ -2,13 +2,12 @@ package homework;
 
 import java.io.Reader;
 import java.io.InputStreamReader;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.StringReader;
 import java.io.File;
 import java.io.InputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import homework.CoolArray;
 import java.util.function.Predicate;
 import java.nio.charset.StandardCharsets;
 
@@ -23,8 +22,8 @@ public class MyScanner {
         in = new InputStreamReader(source);
     }
 
-    public MyScanner(File source) throws FileNotFoundException, IOException {
-        in = new FileReader(source, StandardCharsets.UTF_8);
+    public MyScanner(FileInputStream source, String encoding) throws IOException {
+        in = new InputStreamReader(source, encoding);
     }
 
     public MyScanner(String source) {
@@ -44,7 +43,7 @@ public class MyScanner {
 
     public String nextLine() throws IOException {
         String res = null;
-        CoolArray buf = new CoolArray();
+        StringBuilder sb = new StringBuilder();
         int x = nextChar();
 
         while (true) {
@@ -54,15 +53,15 @@ public class MyScanner {
             char c = (char)x;
             res = "";
             if (c != '\n' && c != '\r') {
-                buf.add(c);
+                sb.append(c);
             } else if (c == '\n') {
                 break;
             }
             x = nextChar();
         }
 
-        if (buf.length() > 0) {
-            res = buf.toString();
+        if (sb.length() > 0) {
+            res = sb.toString();
         }
 
         return res;
@@ -74,22 +73,22 @@ public class MyScanner {
 
     public String next(Predicate<Character> notDelimiter) throws IOException {
         String res = null;
-        CoolArray buf = new CoolArray();
+        StringBuilder sb = new StringBuilder();
         boolean wasNotDelimiter = false;
         int c = nextChar();
 
         while (c != -1) {
             if (notDelimiter.test((char)c)) {
                 wasNotDelimiter = true;
-                buf.add((char)c);
+                sb.append((char)c);
             } else if (wasNotDelimiter) {
                 break;
             }
             c = nextChar();
         }
 
-        if (buf.length() > 0) {
-            res = buf.toString();
+        if (sb.length() > 0) {
+            res = sb.toString();
         }
 
         return res;

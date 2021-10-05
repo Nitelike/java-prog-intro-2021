@@ -4,8 +4,9 @@ import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.io.File;
-import java.nio.charset.StandardCharsets;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 import java.util.function.Predicate;
 import homework.MyScanner;
 
@@ -14,7 +15,7 @@ public class WordStatWords {
         ArrayList<String> input = new ArrayList<String>();
 
         try {
-            MyScanner in = new MyScanner(new File(args[0]));
+            MyScanner in = new MyScanner(new FileInputStream(args[0]), "utf8");
             try {
                 while (true) {
                     String word = in.next(partOfWord());
@@ -33,7 +34,7 @@ public class WordStatWords {
         }
 
         try {
-            BufferedWriter out = new BufferedWriter(new FileWriter(args[1], StandardCharsets.UTF_8));
+            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(args[1]), "utf8"));
             try {
                 Collections.sort(input);
                 for (int i = 0; i < input.size(); i++) {
