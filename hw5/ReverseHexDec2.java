@@ -1,10 +1,9 @@
-import homework.CoolIntArray;
 import homework.MyScanner;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.io.IOException;
 
-public class Reverse {
+public class ReverseHexDec2 {
     public static void main(String[] args) {
         ArrayList<String> strings = new ArrayList<String>();
 
@@ -27,7 +26,7 @@ public class Reverse {
         }
 
         for (int i = strings.size() - 1; i >= 0; i--) {
-            CoolIntArray ints = new CoolIntArray();
+            ArrayList<String> numbers = new ArrayList<String>();
 
             try {
                 MyScanner line = new MyScanner(strings.get(i));
@@ -38,11 +37,14 @@ public class Reverse {
                         if (nxt == null) {
                             break;
                         }
-                        ints.add(Integer.parseInt(nxt));
+                        if (!isHex(nxt)) {
+                            nxt = "0x" + Integer.toHexString(Integer.parseInt(nxt));
+                        }
+                        numbers.add(nxt);
                     }
 
-                    for (int j = ints.length() - 1; j >= 0; j--) {
-                        System.out.print(ints.get(j) + " ");
+                    for (int j = numbers.size() - 1; j >= 0; j--) {
+                        System.out.print(numbers.get(j) + " ");
                     }
 
                     System.out.println();
@@ -53,5 +55,9 @@ public class Reverse {
                 System.err.println("Can't read line");
             }
         }   
+    }
+
+    private static boolean isHex(String num) {
+        return (num.startsWith("0x") || num.startsWith("0X"));
     }
 }
