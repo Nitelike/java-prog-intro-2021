@@ -13,7 +13,7 @@ public class HelloWorld {
                 String str = in.nextLine();
 
                 while(str != null) {
-                    System.out.println(str);
+                    System.out.println(str + " ");
                     str = in.nextLine();
                 }
             } finally {
