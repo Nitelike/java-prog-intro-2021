@@ -11,41 +11,25 @@ import homework.CoolArray;
 
 public class WordStatWords {
     public static void main(String[] args) {
-        String inputName = "input.txt", outputName = "output.txt";
         ArrayList<String> input = new ArrayList<String>();
+        CoolArray str = new CoolArray();
 
         try {
-            inputName = args[0];
-            outputName = args[1];
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.err.println("Not all arguments were provided. Can't set right filenames.");
-        }
-
-        try {
-            BufferedReader in = new BufferedReader(new FileReader(inputName, StandardCharsets.UTF_8));
-            CoolArray str = new CoolArray();
-
+            BufferedReader in = new BufferedReader(new FileReader(args[0], StandardCharsets.UTF_8));
+            
             try {
                 int x = in.read();
-
-                while (true) {
+                while (true) { 
                     char c = (char)x;
-
-                    if (canBeInWord(c)) {
-                        c = Character.toLowerCase(c);
-                        str.add(c);
-                    } else {
-                        String word = str.toString();
-                        if (word.length() > 0) {
-                            input.add(word);
-                        }
+                    if (x != -1 && canBeInWord(c)) {
+                        str.add(Character.toLowerCase(c));
+                    } else if (str.length() > 0) {
+                        input.add(str.toString());
                         str = new CoolArray();
                     }
-
                     if (x == -1) {
                         break;
                     }
-
                     x = in.read();
                 }
 
@@ -53,17 +37,16 @@ public class WordStatWords {
                 in.close();
             }
         } catch (FileNotFoundException e) {
-            System.err.println("Can't find " + inputName);
+            System.err.println("Can't find " + args[0]);
         } catch (IOException e) {
-            System.err.println("Can't read from " + inputName);
+            System.err.println("Can't read from " + args[0]);
         }
 
         try {
-            BufferedWriter out = new BufferedWriter(new FileWriter(outputName, StandardCharsets.UTF_8));
+            BufferedWriter out = new BufferedWriter(new FileWriter(args[1], StandardCharsets.UTF_8));
 
             try {
                 Collections.sort(input);
-
                 for (int i = 0; i < input.size(); i++) {
                     int j = i;
                     while (j < input.size() && input.get(i).equals(input.get(j))) {
@@ -77,9 +60,9 @@ public class WordStatWords {
                 out.close();
             }
         } catch (FileNotFoundException e) {
-            System.err.println("Can't find " + outputName);
+            System.err.println("Can't find " + args[1]);
         } catch (IOException e) {
-            System.err.println("Can't write to " + outputName);
+            System.err.println("Can't write to " + args[1]);
         }
     }
 
