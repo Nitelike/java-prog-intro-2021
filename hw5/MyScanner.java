@@ -14,7 +14,7 @@ import java.nio.charset.StandardCharsets;
 public class MyScanner {
     private final int BUFFER_SIZE = 1024;
     private char[] buffer = new char[BUFFER_SIZE];
-    private int bufferedChars = 0;
+    private int buffered = 0;
     private int ptr = 0;
     private Reader in;
 
@@ -31,11 +31,11 @@ public class MyScanner {
     }
 
     public int nextChar() throws IOException {
-        if (ptr >= bufferedChars && bufferedChars >= 0) {
-            bufferedChars = in.read(buffer);
+        if (ptr >= buffered && buffered >= 0) {
+            buffered = in.read(buffer);
             ptr = 0;
         }
-        if (ptr < bufferedChars) {
+        if (ptr < buffered) {
             return (int)buffer[ptr++];
         }
         return -1;
@@ -44,9 +44,9 @@ public class MyScanner {
     public String nextLine() throws IOException {
         String res = null;
         StringBuilder sb = new StringBuilder();
-        int x = nextChar();
 
         while (true) {
+            int x = nextChar();
             if (x == -1) {
                 break;
             }
@@ -57,7 +57,6 @@ public class MyScanner {
             } else if (c == '\n') {
                 break;
             }
-            x = nextChar();
         }
 
         if (sb.length() > 0) {
