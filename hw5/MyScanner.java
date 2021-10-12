@@ -1,6 +1,6 @@
 package homework;
 
-import java.io.Reader;
+import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.io.InputStream;
@@ -8,54 +8,26 @@ import java.io.IOException;
 import java.util.function.Predicate;
 
 public class MyScanner {
-    private final int BUFFER_SIZE = 1024;
-    private char[] buffer = new char[BUFFER_SIZE];
-    private int buffered = 0;
-    private int ptr = 0;
-    private Reader in;
+    private BufferedReader in;
 
     public MyScanner(InputStream source) throws IOException {
-        in = new InputStreamReader(source, "utf8");
+        in = new BufferedReader(
+            new InputStreamReader(source, "utf8")
+        );
     }
 
     public MyScanner(String source) {
-        in = new StringReader(source);
+        in = new BufferedReader(
+            new StringReader(source)
+        );
     }
 
     public int nextChar() throws IOException {
-        if (ptr >= buffered && buffered >= 0) {
-            buffered = in.read(buffer);
-            ptr = 0;
-        }
-        if (ptr < buffered) {
-            return (int)buffer[ptr++];
-        }
-        return -1;
+        return in.read();
     }
 
     public String nextLine() throws IOException {
-        String res = null;
-        StringBuilder sb = new StringBuilder();
-
-        while (true) {
-            int x = nextChar();
-            if (x == -1) {
-                break;
-            }
-            char c = (char)x;
-            res = "";
-            if (c != '\n') {
-                sb.append(c);
-            } else {
-                break;
-            }
-        }
-
-        if (sb.length() > 0) {
-            res = sb.toString();
-        }
-
-        return res;
+        return in.readLine();
     }
 
     public String next() throws IOException {
