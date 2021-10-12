@@ -22,7 +22,8 @@ public class ReverseHexDec2 {
                 in.close();
             }
         } catch (IOException e) {
-            System.err.println("Can't read from System in");
+            System.err.println("Can't read from System in: " + e.getMessage());
+            return;
         }
 
         for (int i = strings.size() - 1; i >= 0; i--) {
@@ -52,7 +53,8 @@ public class ReverseHexDec2 {
                     line.close();
                 }
             } catch (IOException e) {
-                System.err.println("Can't read line");
+                System.err.println("Can't read line: " + e.getMessage());
+                return;
             }
         }   
     }

@@ -30,9 +30,11 @@ public class WordStatWords {
                 in.close();
             }
         } catch (FileNotFoundException e) {
-            System.err.println("Can't find " + args[0]);
+            System.err.println("Can't find input file: " + e.getMessage());
+            return;
         } catch (IOException e) {
-            System.err.println("Can't read from " + args[0]);
+            System.err.println("Can't read input file: " + e.getMessage());
+            return;
         }
 
         try {
@@ -56,9 +58,11 @@ public class WordStatWords {
                 out.close();
             }
         } catch (FileNotFoundException e) {
-            System.err.println("Can't find " + args[1]);
+            System.err.println("Can't find output file: " + e.getMessage());
+            return;
         } catch (IOException e) {
-            System.err.println("Can't write to " + args[1]);
+            System.err.println("Can't write to output file: " + e.getMessage());
+            return;
         }
     }
 
