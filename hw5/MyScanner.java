@@ -2,14 +2,10 @@ package homework;
 
 import java.io.Reader;
 import java.io.InputStreamReader;
-import java.io.FileInputStream;
 import java.io.StringReader;
-import java.io.File;
 import java.io.InputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.function.Predicate;
-import java.nio.charset.StandardCharsets;
 
 public class MyScanner {
     private final int BUFFER_SIZE = 1024;
@@ -18,12 +14,8 @@ public class MyScanner {
     private int ptr = 0;
     private Reader in;
 
-    public MyScanner(InputStream source) {
-        in = new InputStreamReader(source);
-    }
-
-    public MyScanner(FileInputStream source, String encoding) throws IOException {
-        in = new InputStreamReader(source, encoding);
+    public MyScanner(InputStream source) throws IOException {
+        in = new InputStreamReader(source, "utf8");
     }
 
     public MyScanner(String source) {
@@ -52,9 +44,9 @@ public class MyScanner {
             }
             char c = (char)x;
             res = "";
-            if (c != '\n' && c != '\r') {
+            if (c != '\n') {
                 sb.append(c);
-            } else if (c == '\n') {
+            } else {
                 break;
             }
         }

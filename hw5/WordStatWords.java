@@ -15,7 +15,9 @@ public class WordStatWords {
         ArrayList<String> input = new ArrayList<String>();
 
         try {
-            MyScanner in = new MyScanner(new FileInputStream(args[0]), "utf8");
+            MyScanner in = new MyScanner(
+                new FileInputStream(args[0])
+            );
             try {
                 while (true) {
                     String word = in.next(partOfWord());
@@ -34,7 +36,12 @@ public class WordStatWords {
         }
 
         try {
-            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(args[1]), "utf8"));
+            BufferedWriter out = new BufferedWriter(
+                new OutputStreamWriter(
+                    new FileOutputStream(args[1]),
+                    "utf8"
+                )
+            );
             try {
                 Collections.sort(input);
                 for (int i = 0; i < input.size(); i++) {
