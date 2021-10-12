@@ -6,36 +6,44 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.TreeMap;
+import java.util.Map;
+import java.nio.charset.StandardCharsets;
 
 public class WordStatWords {
     public static void main(String[] args) {
-        ArrayList<String> input = new ArrayList<String>();
+        TreeMap<String, Integer> mp = new TreeMap<>();
         StringBuilder sb = new StringBuilder();
 
         try {
             BufferedReader in = new BufferedReader(
                 new InputStreamReader(
                     new FileInputStream(args[0]),
-                    "utf-8"
+                    StandardCharsets.UTF_8
                 )
             );
             
             try {
-                int x = in.read();
                 while (true) { 
+                    int x = in.read();
                     char c = (char)x;
                     if (x != -1 && canBeInWord(c)) {
                         sb.append(Character.toLowerCase(c));
                     } else if (sb.length() > 0) {
-                        input.add(sb.toString());
+                        int cnt = 1;
+                        String word = sb.toString();
+
+                        if (mp.get(word) != null) {
+                            cnt += mp.get(word);
+                        }
+
+                        mp.put(word, cnt);
+
                         sb = new StringBuilder();
                     }
                     if (x == -1) {
                         break;
                     }
-                    x = in.read();
                 }
 
             } finally {
@@ -53,30 +61,23 @@ public class WordStatWords {
             BufferedWriter out = new BufferedWriter(
                 new OutputStreamWriter(
                     new FileOutputStream(args[1]),
-                    "utf-8"
+                    StandardCharsets.UTF_8
                 )
             );
 
             try {
-                Collections.sort(input);
-                for (int i = 0; i < input.size(); i++) {
-                    int j = i;
-                    while (j < input.size() && input.get(i).equals(input.get(j))) {
-                        j++;
-                    }
-                    out.write(input.get(i) + " " + (j-i));
+                for (Map.Entry<String, Integer> entry : mp.entrySet()) {
+                    out.write(entry.getKey() + " " + entry.getValue());
                     out.newLine();
-                    i = j-1;
                 }
+                
             } finally {
                 out.close();
             }
         } catch (FileNotFoundException e) {
             System.err.println("Can't find output file: " + e.getMessage());
-            return;
         } catch (IOException e) {
             System.err.println("Can't write to output file: " + e.getMessage());
-            return;
         }
     }
 
