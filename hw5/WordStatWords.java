@@ -2,21 +2,26 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.io.InputStreamReader;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.util.function.Predicate;
 import homework.MyScanner;
+import java.util.TreeMap;
+import java.util.Map;
+import java.nio.charset.StandardCharsets;
 
 public class WordStatWords {
     public static void main(String[] args) {
-        ArrayList<String> input = new ArrayList<String>();
+        TreeMap<String, Integer> mp = new TreeMap<>();
 
         try {
             MyScanner in = new MyScanner(
-                new FileInputStream(args[0])
+                new InputStreamReader(
+                    new FileInputStream(args[0]),
+                    StandardCharsets.UTF_8
+                )
             );
             try {
                 while (true) {
@@ -24,7 +29,15 @@ public class WordStatWords {
                     if (word == null) {
                         break;
                     }
-                    input.add(word.toLowerCase());
+
+                    int cnt = 1;
+                    word = word.toLowerCase();
+
+                    if (mp.containsKey(word)) {
+                        cnt += mp.get(word);
+                    }
+
+                    mp.put(word, cnt);
                 }
             } finally {
                 in.close();
@@ -41,18 +54,13 @@ public class WordStatWords {
             BufferedWriter out = new BufferedWriter(
                 new OutputStreamWriter(
                     new FileOutputStream(args[1]),
-                    "utf8"
+                    StandardCharsets.UTF_8
                 )
             );
             try {
-                Collections.sort(input);
-                for (int i = 0; i < input.size(); i++) {
-                    int j = i;
-                    while (j < input.size() && input.get(i).equals(input.get(j))) {
-                        j++;
-                    }
-                    out.write(input.get(i) + " " + (j-i) + "\n");
-                    i = j-1;
+                for (Map.Entry<String, Integer> entry : mp.entrySet()) {
+                    out.write(entry.getKey() + " " + entry.getValue());
+                    out.newLine();
                 }
             } finally {
                 out.close();

@@ -1,28 +1,52 @@
-import homework.MyScanner;
-
-import java.io.FileNotFoundException;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.File;
+import java.io.FileNotFoundException;
+import java.nio.charset.StandardCharsets;
 
 public class HelloWorld {
     public static void main(String[] args) {
-        try {
-            MyScanner in = new MyScanner(new File(args[0]));
+        StringBuilder sx = new StringBuilder();
+        System.out.println(sx.toString());
+
+        /*try {
+            BufferedReader in = new BufferedReader(
+                new InputStreamReader(
+                    new FileInputStream(args[0]),
+                    StandardCharsets.UTF_8
+                )
+            );
+
+            String all = "";
 
             try {
-                String str = in.nextLine();
-
-                while(str != null) {
-                    System.out.println(str + " ");
-                    str = in.nextLine();
+                while (true) {
+                    String s = in.readLine();
+                    if (s == null) {
+                        break;
+                    }
+                    all += s;
                 }
             } finally {
                 in.close();
             }
+
+            System.out.print(all);
+
+            for (int i = 0; i < all.length(); i++) {
+                if (all.charAt(i) == '\r') {
+                    System.out.println(i);
+                }
+            }
+
         } catch (FileNotFoundException e) {
-            System.out.println("Cannot find file");
+            System.err.println("Cannot find file");
         } catch (IOException e) {
-            System.out.println("Cannot read file");
-        }
+            System.err.println("Cannot read file");
+        }*/
     }
 }
