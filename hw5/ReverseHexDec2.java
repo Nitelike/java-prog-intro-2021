@@ -1,13 +1,18 @@
 import homework.MyScanner;
 import java.util.ArrayList;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class ReverseHexDec2 {
     public static void main(String[] args) {
-        ArrayList<String> strings = new ArrayList<String>();
+        ArrayList<String> ans = new ArrayList<>();
 
         try {
-            MyScanner in = new MyScanner(System.in);
+            MyScanner in = new MyScanner(
+                new InputStreamReader(
+                    System.in
+                )
+            );
 
             try {
                 while (true) {
@@ -15,7 +20,31 @@ public class ReverseHexDec2 {
                     if (line == null) {
                         break;
                     }
-                    strings.add(line);
+
+                    MyScanner lineScanner = new MyScanner(line);
+                    ArrayList<String> buf = new ArrayList<>();
+                    StringBuilder sb = new StringBuilder();
+
+                    try {
+                        while (true) {
+                            String number = lineScanner.next();
+                            if (number == null) {
+                                break;
+                            }
+                            if (!isHex(number)) {
+                                number = "0x" + Integer.toHexString(Integer.parseInt(number));
+                            }
+                            buf.add(number);
+                        }
+                    } finally {
+                        lineScanner.close();
+                    }
+
+                    for (int i = buf.size() - 1; i >= 0; i--) {
+                        sb.append(buf.get(i) + " ");
+                    }
+
+                    ans.add(sb.toString());
                 }
             } finally {
                 in.close();
@@ -25,37 +54,9 @@ public class ReverseHexDec2 {
             return;
         }
 
-        for (int i = strings.size() - 1; i >= 0; i--) {
-            ArrayList<String> numbers = new ArrayList<String>();
-
-            try {
-                MyScanner line = new MyScanner(strings.get(i));
-
-                try {
-                    while (true) {
-                        String nxt = line.next();
-                        if (nxt == null) {
-                            break;
-                        }
-                        if (!isHex(nxt)) {
-                            nxt = "0x" + Integer.toHexString(Integer.parseInt(nxt));
-                        }
-                        numbers.add(nxt);
-                    }
-
-                    for (int j = numbers.size() - 1; j >= 0; j--) {
-                        System.out.print(numbers.get(j) + " ");
-                    }
-
-                    System.out.println();
-                } finally {
-                    line.close();
-                }
-            } catch (IOException e) {
-                System.err.println("Can't read line: " + e.getMessage());
-                return;
-            }
-        }   
+        for (int i = ans.size() - 1; i >= 0; i--) {
+            System.out.println(ans.get(i));
+        }
     }
 
     private static boolean isHex(String num) {
