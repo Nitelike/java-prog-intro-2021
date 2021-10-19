@@ -9,12 +9,13 @@ import java.io.FileNotFoundException;
 import java.util.TreeMap;
 import java.util.Map;
 import java.nio.charset.StandardCharsets;
-import java.util.function.Predicate;
+import homework.Checker;
 
 public class WordStatWords {
     public static void main(String[] args) {
         TreeMap<String, Integer> mp = new TreeMap<>();
         StringBuilder sb = new StringBuilder();
+        PartOfWord part = new PartOfWord();
 
         try {
             MyScanner in = new MyScanner(
@@ -26,7 +27,7 @@ public class WordStatWords {
             
             try {
                 while (true) { 
-                    String word = in.next(partOfWord());
+                    String word = in.next(part);
                     if (word == null) {
                         break;
                     }
@@ -72,8 +73,11 @@ public class WordStatWords {
             System.err.println("Can't write to output file: " + e.getMessage());
         }
     }
+}
 
-    private static Predicate<Character> partOfWord() {
-        return c -> (Character.isLetter(c) || Character.getType(c) == Character.DASH_PUNCTUATION || c == '\'');
+class PartOfWord implements Checker {
+    @Override
+    public boolean partOfWord(char c) {
+        return (Character.isLetter(c) || Character.getType(c) == Character.DASH_PUNCTUATION || c == '\'');
     }
 }

@@ -4,7 +4,7 @@ import java.io.Reader;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.io.IOException;
-import java.util.function.Predicate;
+import homework.Checker;
 
 public class MyScanner {
     private final int BUFFER_SIZE = 1024;
@@ -12,6 +12,7 @@ public class MyScanner {
     private int buffered = 0;
     private int ptr = 0;
     private boolean skipLF = false;
+    private NotWhitespace part = new NotWhitespace();
     private Reader in;
 
     public MyScanner(InputStreamReader source) {
@@ -60,10 +61,10 @@ public class MyScanner {
     }
 
     public String next() throws IOException {
-        return next(notWhitespace());
+        return next(part);
     }
 
-    public String next(Predicate<Character> notDelimiter) throws IOException {
+    public String next(Checker chk) throws IOException {
         StringBuilder sb = new StringBuilder();
         boolean wasNotDelimiter = false;
         
@@ -71,7 +72,7 @@ public class MyScanner {
             int x = nextChar();
             if (x == -1) {
                 break;
-            } else if (notDelimiter.test((char)x)) {
+            } else if (chk.partOfWord((char)x)) {
                 wasNotDelimiter = true;
                 sb.append((char)x);
             } else if (wasNotDelimiter) {
@@ -89,8 +90,11 @@ public class MyScanner {
     public void close() throws IOException {
         in.close();
     }
+}
 
-    private Predicate<Character> notWhitespace() {
-        return c -> !Character.isWhitespace(c);
+class NotWhitespace implements Checker {
+    @Override
+    public boolean partOfWord(char c) {
+        return !Character.isWhitespace(c);
     }
 }
