@@ -8,39 +8,56 @@ import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.Map;
 import homework.IntList;
+import homework.MyScanner;
+import homework.Checker;
 
-public class Wspp {
+public class WsppSecondG {
     public static void main(String[] args) {
         LinkedHashMap<String, IntList> mp = new LinkedHashMap<>();
         StringBuilder sb = new StringBuilder();
         int wordCnt = 0;
 
         try {
-            BufferedReader in = new BufferedReader(
+            MyScanner in = new MyScanner(
                 new InputStreamReader(
                     new FileInputStream(args[0]),
                     StandardCharsets.UTF_8
                 )
             );
-            
+
             try {
-                while (true) { 
-                    int x = in.read();
-                    char c = (char)x;
-                    if (x != -1 && canBeInWord(c)) {
-                        sb.append(Character.toLowerCase(c));
-                    } else if (sb.length() > 0) {
-                        String word = sb.toString();
-                        mp.computeIfAbsent(word, k -> new IntList()).add(++wordCnt);
-                        sb = new StringBuilder();
-                    }
-                    if (x == -1) {
+                while (true) {
+                    String line = in.nextLine();
+                    if (line == null) {
                         break;
                     }
-                }
+                    HashMap<String, Integer> lineMp = new HashMap<>();
 
+                    MyScanner lineScanner = new MyScanner(line);
+
+                    try {
+                        while (true) {
+                            String word = lineScanner.next(new PartOfWord());
+
+                            if (word == null) {
+                                break;
+                            }
+
+                            word = word.toLowerCase();
+                            lineMp.computeIfAbsent(word, k -> 0);
+                            int cnt = lineMp.get(word) + 1;
+                            lineMp.put(word, cnt);
+
+                            wordCnt++;
+                            mp.computeIfAbsent(word, k -> new IntList()).add(wordCnt * (cnt % 2 - 1));
+                        }
+                    } finally {
+                        lineScanner.close();
+                    }
+                }
             } finally {
                 in.close();
             }
@@ -65,7 +82,9 @@ public class Wspp {
                     IntList cur = entry.getValue();
                     out.write(entry.getKey() + " " + cur.length());
                     for (int i = 0; i < cur.length(); i++) {
-                        out.write(" " + cur.get(i));
+                        if (cur.get(i) < 0) {
+                            out.write(" " + -cur.get(i));
+                        }
                     }
                     out.newLine();
                 }
@@ -81,6 +100,13 @@ public class Wspp {
     }
 
     private static boolean canBeInWord(char c) {
+        return (Character.isLetter(c) || Character.getType(c) == Character.DASH_PUNCTUATION || c == '\'');
+    }
+}
+
+class PartOfWord implements Checker {
+    @Override
+    public boolean partOfWord(char c) {
         return (Character.isLetter(c) || Character.getType(c) == Character.DASH_PUNCTUATION || c == '\'');
     }
 }
