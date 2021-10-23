@@ -19,6 +19,7 @@ public class WsppSecondG {
         LinkedHashMap<String, IntList> mp = new LinkedHashMap<>();
         StringBuilder sb = new StringBuilder();
         int wordCnt = 0;
+        PartOfWord checker = new PartOfWord();
 
         try {
             MyScanner in = new MyScanner(
@@ -31,16 +32,17 @@ public class WsppSecondG {
             try {
                 while (true) {
                     String line = in.nextLine();
+
                     if (line == null) {
                         break;
                     }
-                    HashMap<String, Integer> lineMp = new HashMap<>();
 
+                    HashMap<String, Integer> lineMp = new HashMap<>();
                     MyScanner lineScanner = new MyScanner(line);
 
                     try {
                         while (true) {
-                            String word = lineScanner.next(new PartOfWord());
+                            String word = lineScanner.next(checker);
 
                             if (word == null) {
                                 break;
