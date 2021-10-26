@@ -12,6 +12,7 @@ public class MyScanner {
     private int buffered = 0;
     private int ptr = 0;
     private boolean skipLF = false;
+    private boolean wasLF = false;  // stores information about LF only between words
     private NotWhitespace part = new NotWhitespace();
     private Reader in;
 
@@ -34,6 +35,26 @@ public class MyScanner {
         return -1;
     }
 
+    private boolean isLF(char c) {
+        if ((c == '\n') || (c == '\r')) {
+            if (!(skipLF && (c == '\n'))) {
+                skipLF = (c == '\r');
+                wasLF = true;
+                return true;
+            }
+            skipLF = false;
+        }
+        return false;
+    }
+
+    public void resetLFFlag() {
+        wasLF = false;
+    }
+
+    public boolean getLFFlag() {
+        return wasLF;
+    }
+
     public String nextLine() throws IOException {
         String res = null;
         StringBuilder sb = new StringBuilder();
@@ -43,14 +64,8 @@ public class MyScanner {
             char c = (char)x;
             if (x == -1) {
                 break;
-            } else if ((c == '\n') || (c == '\r')) {
-                if (skipLF && (c == '\n')) {
-                    skipLF = false;
-                    continue;
-                } else {
-                    res = sb.toString();
-                }
-                skipLF = (c == '\r');
+            } else if (isLF(c)) {
+                res = sb.toString();
                 break;
             } else {
                 sb.append(c);
@@ -70,14 +85,17 @@ public class MyScanner {
         
         while (true) {
             int x = nextChar();
+            char c = (char)x;
             if (x == -1) {
                 break;
-            } else if (chk.partOfWord((char)x)) {
+            } else if (chk.partOfWord(c)) {
                 wasNotDelimiter = true;
-                sb.append((char)x);
+                sb.append(c);
             } else if (wasNotDelimiter) {
+                ptr--;
                 break;
             }
+            isLF(c);
         }
 
         if (sb.length() > 0) {

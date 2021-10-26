@@ -17,7 +17,6 @@ import homework.Checker;
 public class WsppSecondG {
     public static void main(String[] args) {
         LinkedHashMap<String, IntList> mp = new LinkedHashMap<>();
-        StringBuilder sb = new StringBuilder();
         int wordCnt = 0;
         PartOfWord checker = new PartOfWord();
 
@@ -30,34 +29,44 @@ public class WsppSecondG {
             );
 
             try {
+                String savedWord = null;
+
                 while (true) {
-                    String line = in.nextLine();
-
-                    if (line == null) {
-                        break;
-                    }
-
                     HashMap<String, Integer> lineMp = new HashMap<>();
-                    MyScanner lineScanner = new MyScanner(line);
 
-                    try {
-                        while (true) {
-                            String word = lineScanner.next(checker);
+                    in.resetLFFlag();
+                    boolean wasWord = false;
 
-                            if (word == null) {
+                    while (true) {
+                        String word = null;
+                        if (savedWord != null) {
+                            word = savedWord;
+                            savedWord = null;
+                        } else {
+                            word = in.next(checker);
+                        }
+
+                        if (word != null) {
+                            wasWord = true;
+                            if (!in.getLFFlag()) {
+                                word = word.toLowerCase();
+                                lineMp.computeIfAbsent(word, k -> 0);
+                                int cnt = lineMp.get(word) + 1;
+                                lineMp.put(word, cnt);
+
+                                wordCnt++;
+                                mp.computeIfAbsent(word, k -> new IntList()).add(wordCnt * (cnt % 2 - 1));
+                            } else {
+                                savedWord = word;
                                 break;
                             }
-
-                            word = word.toLowerCase();
-                            lineMp.computeIfAbsent(word, k -> 0);
-                            int cnt = lineMp.get(word) + 1;
-                            lineMp.put(word, cnt);
-
-                            wordCnt++;
-                            mp.computeIfAbsent(word, k -> new IntList()).add(wordCnt * (cnt % 2 - 1));
+                        } else {
+                            break;
                         }
-                    } finally {
-                        lineScanner.close();
+                    }
+
+                    if (!wasWord) {
+                        break;
                     }
                 }
             } finally {
