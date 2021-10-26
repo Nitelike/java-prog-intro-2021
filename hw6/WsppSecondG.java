@@ -1,4 +1,3 @@
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -13,7 +12,7 @@ import java.util.Map;
 
 public class WsppSecondG {
     public static void main(String[] args) {
-        LinkedHashMap<String, IntList> mp = new LinkedHashMap<>();
+        Map<String, IntList> mp = new LinkedHashMap<>();
         int wordCnt = 0;
         PartOfWord checker = new PartOfWord();
 
@@ -29,7 +28,7 @@ public class WsppSecondG {
                 String savedWord = null;
 
                 while (true) {
-                    HashMap<String, Integer> lineMp = new HashMap<>();
+                    Map<String, Integer> lineMp = new HashMap<>();
 
                     in.resetLFFlag();
                     boolean wasWord = false;
@@ -47,8 +46,7 @@ public class WsppSecondG {
                             wasWord = true;
                             if (!in.getLFFlag()) {
                                 word = word.toLowerCase();
-                                lineMp.computeIfAbsent(word, k -> 0);
-                                int cnt = lineMp.get(word) + 1;
+                                int cnt = lineMp.computeIfAbsent(word, k -> 0) + 1;
                                 lineMp.put(word, cnt);
 
                                 wordCnt++;
