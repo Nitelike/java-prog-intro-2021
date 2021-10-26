@@ -1,5 +1,3 @@
-package homework;
-
 import java.util.Arrays;
 
 public class IntList {

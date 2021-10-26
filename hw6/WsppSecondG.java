@@ -10,9 +10,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashMap;
 import java.util.HashMap;
 import java.util.Map;
-import homework.IntList;
-import homework.MyScanner;
-import homework.Checker;
 
 public class WsppSecondG {
     public static void main(String[] args) {
