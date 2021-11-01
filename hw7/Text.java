@@ -8,7 +8,7 @@ public class Text implements Element {
 	}
 
 	@Override
-	public String toMarkdown() {
-		return data;
+	public void toMarkdown(StringBuilder sb) {
+		sb.append(data);
 	}
 }

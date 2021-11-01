@@ -12,13 +12,11 @@ public abstract class AbstractElement implements Element {
 	}
 
 	@Override
-	public String toMarkdown() {
-		StringBuilder sb = new StringBuilder();
+	public void toMarkdown(StringBuilder sb) {
 		sb.append(wrapper);
 		for (Element elem : inner) {
-			sb.append(elem.toMarkdown());
+			elem.toMarkdown(sb);
 		}
 		sb.append(wrapper);
-		return sb.toString();
 	}
 }

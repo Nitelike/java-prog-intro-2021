@@ -1,5 +1,5 @@
 package markup;
 
 public interface Element {
-	public abstract String toMarkdown();
+	public abstract void toMarkdown(StringBuilder sb);
 }
