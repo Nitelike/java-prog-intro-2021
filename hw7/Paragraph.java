@@ -3,7 +3,7 @@ package markup;
 import java.util.List;
 
 public class Paragraph extends AbstractElement {
-	public Paragraph(List<Element> inner) {
-		super("", inner);
-	}	
+    public Paragraph(List<Element> inner) {
+        super("", inner);
+    }   
 }
