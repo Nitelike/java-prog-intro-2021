@@ -1,5 +1,5 @@
 package markup;
 
-public interface MarkdownElement {
-    public abstract void toMarkdown(StringBuilder sb);
+public interface MarkdownElement extends BBCodeElement {
+    void toMarkdown(StringBuilder sb);
 }

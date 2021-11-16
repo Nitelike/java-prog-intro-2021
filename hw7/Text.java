@@ -1,6 +1,6 @@
 package markup;
 
-public class Text implements MarkdownElement, BBCodeElement, InParagraph {
+public class Text implements InParagraph {
     private String data;
 
     public Text(String data) {

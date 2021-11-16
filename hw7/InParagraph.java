@@ -1,5 +1,5 @@
 package markup;
 
-public interface InParagraph extends BBCodeElement, MarkdownElement {
+public interface InParagraph extends MarkdownElement {
     
 }

@@ -2,18 +2,8 @@ package markup;
 
 import java.util.List;
 
-public class ListItem implements BBCodeElement {
-	private List<InList> inner;
-
+public class ListItem extends AbstractBBCodeElement {
     public ListItem(List<InList> inner) {
-        this.inner = inner;
-    }
-
-    @Override
-    public void toBBCode(StringBuilder sb) {
-        sb.append("[*]");
-        for (InList elem : inner) {
-            elem.toBBCode(sb);
-        }
+        super("[*]", "", inner);
     }
 }
