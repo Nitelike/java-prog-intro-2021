@@ -1,10 +1,7 @@
-package homework;
-
 import java.io.Reader;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.io.IOException;
-import homework.Checker;
 
 public class MyScanner {
     private final int BUFFER_SIZE = 1024;

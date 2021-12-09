@@ -10,7 +10,7 @@ import java.util.LinkedHashMap;
 import java.util.HashMap;
 import java.util.Map;
 
-public class WsppSecondG {
+public class Wspp {
     public static void main(String[] args) {
         Map<String, IntList> mp = new LinkedHashMap<>();
         int wordCnt = 0;
@@ -28,8 +28,6 @@ public class WsppSecondG {
                 String savedWord = null;
 
                 while (true) {
-                    Map<String, Integer> lineMp = new HashMap<>();
-
                     in.resetLFFlag();
                     boolean wasWord = false;
 
@@ -45,12 +43,7 @@ public class WsppSecondG {
                         if (word != null) {
                             wasWord = true;
                             if (!in.getLFFlag()) {
-                                word = word.toLowerCase();
-                                int cnt = lineMp.computeIfAbsent(word, k -> 0) + 1;
-                                lineMp.put(word, cnt);
-
-                                wordCnt++;
-                                mp.computeIfAbsent(word, k -> new IntList()).add(wordCnt * (cnt % 2 - 1));
+                                mp.computeIfAbsent(word.toLowerCase(), k -> new IntList()).add(++wordCnt);
                             } else {
                                 savedWord = word;
                                 break;
@@ -88,9 +81,7 @@ public class WsppSecondG {
                     IntList cur = entry.getValue();
                     out.write(entry.getKey() + " " + cur.length());
                     for (int i = 0; i < cur.length(); i++) {
-                        if (cur.get(i) < 0) {
-                            out.write(" " + -cur.get(i));
-                        }
+                        out.write(" " + cur.get(i));
                     }
                     out.newLine();
                 }

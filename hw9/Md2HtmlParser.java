@@ -6,7 +6,7 @@ import java.util.HashMap;
 public class Md2HtmlParser {
     private String block;
     private int index;
-    private String[] markdownTags = {"**", "*", "__", "_", "```", "~", "`", "--"};
+    private final String[] markdownTags = {"**", "*", "__", "_", "```", "~", "`", "--"};
     private Map<Character, String> specialChars = new HashMap<>();
     private Map<String, String> closeTags = new HashMap<>();
 
@@ -26,30 +26,28 @@ public class Md2HtmlParser {
     }
 
     private int countHeaderTags() {
-        while (index < block.length() && block.charAt(index) == '#') {
-            index++;
-        }
-        if (Character.isWhitespace(block.charAt(index))) {
-            return index++;
+        for (index = 0; index < block.length(); index++) {
+            if (Character.isWhitespace(block.charAt(index))) {
+                return index++;
+            } else if (block.charAt(index) != '#') {
+                break;
+            }
         }
         return 0;
     }
 
-    private String shieldingMarkdownSymbols() {
-        char cur = block.charAt(index);
-        if (cur == '*' || cur == '_' || cur == '`') {
-            return Character.toString(cur);
+    private String escapeIfTag(char c) {
+        String cur = convertIfSpecial(c);
+        if (cur.equals("*") || cur.equals("_") || cur.equals("`")) {
+            return cur;
         } else {
-            return ("\\" + convertIfSpecial(cur));
+            return "\\" + cur;
         }
     }
 
     private String getOpenTag() {
         for (String tag : markdownTags) {
-            //if (block.substring(index).startsWith(tag)) {
-            //    return tag;
-            //}
-            if (index + tag.length() <= block.length() && block.substring(index, index + tag.length()).equals(tag)) {
+            if (substr(index, tag.length()).equals(tag)) {
                 return tag;
             }
         }
@@ -60,27 +58,38 @@ public class Md2HtmlParser {
         return specialChars.containsKey(c) ? specialChars.get(c) : Character.toString(c);
     }
 
+    private String convertCloseTag(String closeTag) {
+        return closeTags.get(closeTag);
+    }
+
+    private String substr(int l, int len) {
+        if (l + len <= block.length()) {
+            return block.substring(l, l + len);
+        }
+        return "";
+    }
+
     private String convertFromMarkdown() {
         StringBuilder res = new StringBuilder();
         String openTag = getOpenTag();
 
         index += openTag.length();
         int start = index;
-        boolean closingTagExists = false;
 
         String converted = parseInline(openTag);
         String expectedCloseTag = convertCloseTag(openTag);
 
-        if (converted.endsWith(expectedCloseTag)) {
+        if (openTag.length() > 1 || converted.endsWith(expectedCloseTag)) {
             res.append(expectedCloseTag.substring(0, 1) + expectedCloseTag.substring(2));
-            closingTagExists = true;
         } else {
             res.append(openTag);
-        }
+        }        
 
-        if (closingTagExists && openTag.equals("```")) {
+        if (converted.endsWith(expectedCloseTag) && openTag.equals("```")) {
             res.append(block.substring(start, index - 3));
             res.append(expectedCloseTag);
+        } else if (openTag.equals("```")) {
+            res.append(block.substring(start));
         } else {
             res.append(converted);
         }
@@ -90,39 +99,24 @@ public class Md2HtmlParser {
         return res.toString();
     }
 
-    private String convertCloseTag(String closeTag) {
-        return closeTags.get(closeTag);
-    }
-
-    private boolean checkForCloseTag(String closeTag) {
-        if (closeTag == null || index + closeTag.length() > block.length()) {
-            return false;
-        }
-        return block.substring(index, index + closeTag.length()).equals(closeTag);
-    }
 
     private String parseInline(String closeTag) {
         StringBuilder res = new StringBuilder();
 
         while (index < block.length()) {
             String openTag = getOpenTag();
+            char cur = block.charAt(index);
 
             if (index > 0 && block.charAt(index - 1) == '\\') {
-                res.append(shieldingMarkdownSymbols());
-            } else if (openTag != null && openTag != closeTag) {
-                res.append(convertFromMarkdown());
-            } else if (checkForCloseTag(closeTag)) {
+                res.append(escapeIfTag(cur));
+            } else if (openTag != null && closeTag != null && openTag.equals(closeTag)) {
                 res.append(convertCloseTag(closeTag));
                 index += closeTag.length();
                 return res.toString();
-            } else if (block.charAt(index) == '\\') {
-                if (index + 1 >= block.length()) {
-                    res.append(block.charAt(index));
-                }
-            } else if (openTag != null) {
+            } else if (openTag != null && (closeTag == null || !closeTag.equals("```"))) {
                 res.append(convertFromMarkdown());
-            } else {
-                res.append(convertIfSpecial(block.charAt(index)));
+            } else if (cur != '\\') {
+                res.append(convertIfSpecial(cur));
             }
 
             index++;
@@ -135,20 +129,12 @@ public class Md2HtmlParser {
         block = sb.toString();
         index = 0;
 
-        StringBuilder res = new StringBuilder();
         int headerLvl = countHeaderTags();
 
         if (headerLvl == 0) {
-            res.append("<p>");
-            res.append(block.substring(0, index));
-            res.append(parseInline(null));
-            res.append("</p>");
+            return "<p>" + substr(0, index) + parseInline(null) + "</p>";
         } else {
-            res.append("<h" + Integer.toString(headerLvl) + ">");
-            res.append(parseInline(null));
-            res.append("</h" + Integer.toString(headerLvl) + ">");
+            return "<h" + Integer.toString(headerLvl) + ">" + parseInline(null) + "</h" + Integer.toString(headerLvl) + ">";
         }
-
-        return res.toString();
     }
 }

@@ -6,13 +6,13 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.FileNotFoundException;
-import java.util.TreeMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.nio.charset.StandardCharsets;
 
-public class WordStatWords {
+public class WordStatInput {
     public static void main(String[] args) {
-        Map<String, Integer> mp = new TreeMap<>();
+        Map<String, Integer> mp = new LinkedHashMap<>();
         StringBuilder sb = new StringBuilder();
 
         try {

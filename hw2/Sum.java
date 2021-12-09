@@ -1,6 +1,6 @@
-public class SumLongHex {
+public class Sum {
     public static void main(String[] args) {
-        long result = 0;
+        int result = 0;
 
         for (int j = 0; j < args.length; j++) {
             String input = args[j] + " ";
@@ -10,11 +10,7 @@ public class SumLongHex {
                 if (Character.isWhitespace(input.charAt(i))) {
                     if (i - leftPtr >= 1) {
                         String cur = input.substring(leftPtr, i);
-                        if (cur.startsWith("0x") || cur.startsWith("0X")) {
-                            result += Long.parseUnsignedLong(cur.substring(2), 16);
-                        } else {
-                            result += Long.parseLong(cur, 10);
-                        }
+                        result += Integer.parseInt(cur, 10);
                     }
 
                     leftPtr = i + 1;
