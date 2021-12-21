@@ -1,3 +1,9 @@
+package hw6;
+
+import utility.Checker;
+import utility.IntList;
+import utility.MyScanner;
+
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -14,7 +20,7 @@ public class Wspp {
     public static void main(String[] args) {
         Map<String, IntList> mp = new LinkedHashMap<>();
         int wordCnt = 0;
-        PartOfWord checker = new PartOfWord();
+        Checker checker = new PartOfWord();
 
         try {
             MyScanner in = new MyScanner(

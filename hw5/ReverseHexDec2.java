@@ -8,7 +8,7 @@ import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;
 import java.io.InputStreamReader;
 
-public class Reverse {
+public class ReverseHexDec2 {
     public static void main(String[] args) {
         ArrayList<String> ans = new ArrayList<>();
 
@@ -35,6 +35,9 @@ public class Reverse {
                             String number = lineScanner.next();
                             if (number == null) {
                                 break;
+                            }
+                            if (!isHex(number)) {
+                                number = "0x" + Integer.toHexString(Integer.parseInt(number));
                             }
                             buf.add(number);
                         }
@@ -75,5 +78,9 @@ public class Reverse {
         } catch (IOException e) {
             System.err.println("Can't write to output file: " + e.getMessage());
         }
+    }
+
+    private static boolean isHex(String num) {
+        return (num.startsWith("0x") || num.startsWith("0X"));
     }
 }

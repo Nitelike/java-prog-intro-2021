@@ -1,3 +1,8 @@
+package hw6;
+
+import utility.IntList;
+import utility.MyScanner;
+
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;

@@ -1,11 +1,14 @@
-import homework.CoolArray;
+package hw3;
+
+import utility.IntList;
+
 import java.util.Scanner;
 
 public class ReverseMin2 {
     public static void main(String[] args) {
-        CoolArray minInCol = new CoolArray();
-        CoolArray numbers = new CoolArray();
-        CoolArray indexes = new CoolArray();
+        IntList minInCol = new IntList();
+        IntList numbers = new IntList();
+        IntList indexes = new IntList();
         Scanner in = new Scanner(System.in);
         
         while (in.hasNextLine()) {
@@ -32,7 +35,7 @@ public class ReverseMin2 {
         }
     }
 
-    private static void printInput(CoolArray numbers, CoolArray indexes) {
+    private static void printInput(IntList numbers, IntList indexes) {
         int numInd = 0;
         for (int i = 0; i < indexes.length(); i++) {
             while (numInd < indexes.get(i)) {

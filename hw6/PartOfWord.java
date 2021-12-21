@@ -1,3 +1,7 @@
+package hw6;
+
+import utility.Checker;
+
 public class PartOfWord implements Checker {
     @Override
     public boolean partOfWord(char c) {
