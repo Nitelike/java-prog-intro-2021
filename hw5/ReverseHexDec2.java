@@ -1,5 +1,3 @@
-package hw5;
-
 import utility.MyScanner;
 
 import java.util.ArrayList;

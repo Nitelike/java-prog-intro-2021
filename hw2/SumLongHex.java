@@ -1,5 +1,3 @@
-package hw2;
-
 public class SumLongHex {
     public static void main(String[] args) {
         long result = 0;

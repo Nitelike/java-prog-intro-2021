@@ -1,5 +1,3 @@
-package hw8.K;
-
 import java.io.Reader;
 import java.io.InputStreamReader;
 import java.io.StringReader;

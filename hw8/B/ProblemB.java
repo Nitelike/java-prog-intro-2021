@@ -1,5 +1,3 @@
-package hw8.B;
-
 import java.util.Scanner;
 
 public class ProblemB {

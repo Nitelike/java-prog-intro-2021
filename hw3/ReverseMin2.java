@@ -1,5 +1,3 @@
-package hw3;
-
 import utility.IntList;
 
 import java.util.Scanner;

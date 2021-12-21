@@ -1,5 +1,4 @@
-package hw6;
-
+import utility.Checker;
 import utility.IntList;
 import utility.MyScanner;
 
@@ -19,7 +18,7 @@ public class WsppSecondG {
     public static void main(String[] args) {
         Map<String, IntList> mp = new LinkedHashMap<>();
         int wordCnt = 0;
-        PartOfWord checker = new PartOfWord();
+        Checker checker = new PartOfWord();
 
         try {
             MyScanner in = new MyScanner(
@@ -112,5 +111,12 @@ public class WsppSecondG {
 
     private static boolean canBeInWord(char c) {
         return (Character.isLetter(c) || Character.getType(c) == Character.DASH_PUNCTUATION || c == '\'');
+    }
+
+    private static class PartOfWord implements Checker {
+        @Override
+        public boolean partOfWord(char c) {
+            return (Character.isLetter(c) || Character.getType(c) == Character.DASH_PUNCTUATION || c == '\'');
+        }
     }
 }

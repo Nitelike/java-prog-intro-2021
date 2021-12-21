@@ -1,5 +1,3 @@
-package hw8.E;
-
 import java.io.Reader;
 import java.io.InputStreamReader;
 import java.io.StringReader;
@@ -44,7 +42,7 @@ public class ProblemE {
         } catch (IOException e) {
             System.err.println("Can't read System in: " + e.getMessage());
             return;
-        }        
+        }
 
         int root = teams[0];
         dfs(root, 0);
@@ -113,7 +111,7 @@ class IntList {
 
     public void add(int val) {
         if (length == arr.length) {
-            arr = Arrays.copyOf(arr, (arr.length * 3 / 2) + 1);    
+            arr = Arrays.copyOf(arr, (arr.length * 3 / 2) + 1);
         }
         arr[length++] = val;
     }
@@ -139,15 +137,15 @@ class MyScanner {
     private boolean skipLF = false;
     private NotWhitespace part = new NotWhitespace();
     private Reader in;
- 
+
     public MyScanner(InputStreamReader source) {
         in = source;
     }
- 
+
     public MyScanner(String source) {
         in = new StringReader(source);
     }
- 
+
     public int nextChar() throws IOException {
         if (ptr >= buffered && buffered >= 0) {
             buffered = in.read(buffer);
@@ -158,11 +156,11 @@ class MyScanner {
         }
         return -1;
     }
- 
+
     public String nextLine() throws IOException {
         String res = null;
         StringBuilder sb = new StringBuilder();
- 
+
         while (true) {
             int x = nextChar();
             char c = (char)x;
@@ -181,18 +179,18 @@ class MyScanner {
                 sb.append(c);
             }
         }
- 
+
         return res;
     }
- 
+
     public String next() throws IOException {
         return next(part);
     }
- 
+
     public String next(Checker chk) throws IOException {
         StringBuilder sb = new StringBuilder();
         boolean wasNotDelimiter = false;
-        
+
         while (true) {
             int x = nextChar();
             if (x == -1) {
@@ -204,34 +202,34 @@ class MyScanner {
                 break;
             }
         }
- 
+
         if (sb.length() > 0) {
             return sb.toString();
         }
- 
+
         return null;
     }
- 
+
     public int nextInt() throws IOException {
         return Integer.parseInt(next(part));
     }
- 
+
     public int nextInt(Checker chk) throws IOException {
         return Integer.parseInt(next(chk));
     }
- 
+
     public void close() throws IOException {
         in.close();
     }
 }
- 
+
 class NotWhitespace implements Checker {
     @Override
     public boolean partOfWord(char c) {
         return !Character.isWhitespace(c);
     }
 }
- 
+
 interface Checker {
     boolean partOfWord(char c);
 }
