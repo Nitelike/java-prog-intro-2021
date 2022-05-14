@@ -8,13 +8,13 @@
 Модификации
  * *Base*
     * Класс `ExpressionParser` должен реализовывать интерфейс
-        [Parser](java/expression/exceptions/Parser.java)
+        [Parser](https://www.kgeorgiy.info/git/geo/prog-intro-2021/src/branch/master/java/expression/exceptions/Parser.java)
     * Классы `CheckedAdd`, `CheckedSubtract`, `CheckedMultiply`,
         `CheckedDivide` и `CheckedNegate` должны реализовывать интерфейс
-        [TripleExpression](java/expression/TripleExpression.java)
+        [TripleExpression](https://www.kgeorgiy.info/git/geo/prog-intro-2021/src/branch/master/java/expression/TripleExpression.java)
     * Нельзя использовать типы `long` и `double`
     * Нельзя использовать методы классов `Math` и `StrictMath`
-    * [Исходный код тестов](java/expression/exceptions/ExceptionsTest.java)
+    * [Исходный код тестов](https://www.kgeorgiy.info/git/geo/prog-intro-2021/src/branch/master/java/expression/exceptions/ExceptionsTest.java)
         * Первый аргумент: `easy` или `hard`
         * Последующие аргументы: модификации
  * *PowLog* (36-39)
@@ -35,10 +35,10 @@
 Модификации
  * *Base*
     * Класс `expression.parser.ExpressionParser` должен реализовывать интерфейс
-        [Parser](java/expression/parser/Parser.java)
+        [Parser](https://www.kgeorgiy.info/git/geo/prog-intro-2021/src/branch/master/java/expression/parser/Parser.java)
     * Результат разбора должен реализовывать интерфейс
-        [TripleExpression](java/expression/TripleExpression.java)
-    * [Исходный код тестов](java/expression/parser/ParserTest.java)
+        [TripleExpression](https://www.kgeorgiy.info/git/geo/prog-intro-2021/src/branch/master/java/expression/TripleExpression.java)
+    * [Исходный код тестов](https://www.kgeorgiy.info/git/geo/prog-intro-2021/src/branch/master/java/expression/parser/ParserTest.java)
         * Первый аргумент: `easy` или `hard`
         * Последующие аргументы: модификации
  * *MinMax* (34-37)
@@ -55,16 +55,16 @@
 
 Модификации
  * *Base*
-    * Реализуйте интерфейс [Expression](java/expression/Expression.java)
-    * [Исходный код тестов](java/expression/ExpressionTest.java)
+    * Реализуйте интерфейс [Expression](https://www.kgeorgiy.info/git/geo/prog-intro-2021/src/branch/master/java/expression/Expression.java)
+    * [Исходный код тестов](https://www.kgeorgiy.info/git/geo/prog-intro-2021/src/branch/master/java/expression/ExpressionTest.java)
         * Первый аргумент: `easy` или `hard`
         * Последующие аргументы: модификации
  * *Triple* (31-39)
     * Дополнительно реализуйте поддержку выражений с тремя переменными: `x`, `y` и `z`.
-    * Интерфейс [TripleExpression](java/expression/TripleExpression.java).
+    * Интерфейс [TripleExpression](https://www.kgeorgiy.info/git/geo/prog-intro-2021/src/branch/master/java/expression/TripleExpression.java).
  * *BigInteger* (36-37)
     * Дополнительно реализуйте вычисления в типе `BigInteger`.
-    * Интерфейс [BigIntegerExpression](java/expression/BigIntegerExpression.java).
+    * Интерфейс [BigIntegerExpression](https://www.kgeorgiy.info/git/geo/prog-intro-2021/src/branch/master/java/expression/BigIntegerExpression.java).
 
 
 ## Домашнее задание 10. Игра m,n,k
@@ -91,8 +91,8 @@
 
 Модификации
  * *Базовая*
-    * [Исходный код тестов](java/md2html/Md2HtmlTester.java)
-    * [Откомпилированные тесты](artifacts/Md2HtmlTest.jar)
+    * [Исходный код тестов](https://www.kgeorgiy.info/git/geo/prog-intro-2021/src/branch/master/java/md2html/Md2HtmlTester.java)
+    * [Откомпилированные тесты](https://www.kgeorgiy.info/git/geo/prog-intro-2021/src/branch/master/artifacts/Md2HtmlTest.jar)
         * Аргументы командной строки: модификации
  * *Pre* (36, 37)
     * Добавьте поддержку 
@@ -105,8 +105,8 @@
 Модификации
  * *Base*
     * Исходный код тестов:
-        * [MarkupTester.java](java/markup/MarkupTester.java)
-        * [MarkupTest.java](java/markup/MarkupTest.java)
+        * [MarkupTester.java](https://www.kgeorgiy.info/git/geo/prog-intro-2021/src/branch/master/java/markup/MarkupTester.java)
+        * [MarkupTest.java](https://www.kgeorgiy.info/git/geo/prog-intro-2021/src/branch/master/java/markup/MarkupTest.java)
         * Аргументы командной строки: модификации
  * *BBCodeList* (36, 37)
     * Сделайте модификацию *BBCode*
@@ -115,7 +115,7 @@
       * Ненумерованных списков (класс `UnorderedList`, тег `list`): последовательность элементов
       * Элементов списка (класс `ListItem`, открывающий тег `*`): последовательность абзацев и списков
     * Для новых классов поддержка Markdown не требуется
-    * [Исходный код тестов](java/markup/MarkupListTest.java)
+    * [Исходный код тестов](https://www.kgeorgiy.info/git/geo/prog-intro-2021/src/branch/master/java/markup/MarkupListTest.java)
 
 
 ## Домашнее задание 6. Подсчет слов++
@@ -124,9 +124,9 @@
  * *Base*
     * Класс должен иметь имя `Wspp`
     * Исходный код тестов: 
-        [WsppTest.java](java/wspp/WsppTest.java), 
-        [WsppTester.java](java/wspp/WsppTester.java)
-    * Откомпилированные тесты: [WsppTest.jar](artifacts/WsppTest.jar)
+        [WsppTest.java](https://www.kgeorgiy.info/git/geo/prog-intro-2021/src/branch/master/java/wspp/WsppTest.java), 
+        [WsppTester.java](https://www.kgeorgiy.info/git/geo/prog-intro-2021/src/branch/master/java/wspp/WsppTester.java)
+    * Откомпилированные тесты: [WsppTest.jar](https://www.kgeorgiy.info/git/geo/prog-intro-2021/src/branch/master/artifacts/WsppTest.jar)
         * Аргументы командной строки: модификации
  * *SecondG* (36-37)
     * Вместо номеров вхождений во всем файле надо указывать
@@ -138,8 +138,8 @@
 
 Модификации
  * *Base*
-    * Исходный код тестов: [FastReverseTest.java](java/reverse/FastReverseTest.java)
-    * Откомпилированные тесты: [FastReverseTest.jar](artifacts/FastReverseTest.jar)
+    * Исходный код тестов: [FastReverseTest.java](https://www.kgeorgiy.info/git/geo/prog-intro-2021/src/branch/master/java/reverse/FastReverseTest.java)
+    * Откомпилированные тесты: [FastReverseTest.jar](https://www.kgeorgiy.info/git/geo/prog-intro-2021/src/branch/master/artifacts/FastReverseTest.jar)
         * Аргументы командной строки: модификации
  * *HexDec2* (36-37)
     * На вход подаются десятичные и шестнадцатеричные числа
@@ -154,10 +154,10 @@
  * *Base*
     * Класс должен иметь имя `WordStatInput`
     * Исходный код тестов:
-        [WordStatTest.java](java/wordStat/WordStatTest.java),
-        [WordStatTester.java](java/wordStat/WordStatTester.java),
-        [WordStatChecker.java](java/wordStat/WordStatChecker.java)
-    * Откомпилированные тесты: [WordStatTest.jar](artifacts/WordStatTest.jar)
+        [WordStatTest.java](https://www.kgeorgiy.info/git/geo/prog-intro-2021/src/branch/master/java/wordStat/WordStatTest.java),
+        [WordStatTester.java](https://www.kgeorgiy.info/git/geo/prog-intro-2021/src/branch/master/java/wordStat/WordStatTester.java),
+        [WordStatChecker.java](https://www.kgeorgiy.info/git/geo/prog-intro-2021/src/branch/master/java/wordStat/WordStatChecker.java)
+    * Откомпилированные тесты: [WordStatTest.jar](https://www.kgeorgiy.info/git/geo/prog-intro-2021/src/branch/master/artifacts/WordStatTest.jar)
         * Аргументы командной строки: модификации
  * *Words* (31, 32, 33, 36, 37)
     * В выходном файле слова должны быть упорядочены в лексикографическом порядке
@@ -172,9 +172,9 @@
 Модификации
  * *Base*
     * Исходный код тестов:
-        [ReverseTest.java](java/reverse/ReverseTest.java),
-        [ReverseTester.java](java/reverse/ReverseTester.java)
-    * Откомпилированные тесты: [ReverseTest.jar](artifacts/ReverseTest.jar)
+        [ReverseTest.java](https://www.kgeorgiy.info/git/geo/prog-intro-2021/src/branch/master/java/reverse/ReverseTest.java),
+        [ReverseTester.java](https://www.kgeorgiy.info/git/geo/prog-intro-2021/src/branch/master/java/reverse/ReverseTester.java)
+    * Откомпилированные тесты: [ReverseTest.jar](https://www.kgeorgiy.info/git/geo/prog-intro-2021/src/branch/master/artifacts/ReverseTest.jar)
         * Аргументы командной строки: модификации
  * *Min2* (36, 37)
     * Рассмотрим входные данные как (не полностью определенную) матрицу,
